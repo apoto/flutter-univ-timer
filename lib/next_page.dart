@@ -8,7 +8,7 @@ class NextPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: const Center(
-        child: Text('10秒たったよ、おめでとう〜'),
+        child: Text('3分です、カップ麺ができましたよ'),
       ),
     );
   }

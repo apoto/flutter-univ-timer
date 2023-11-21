@@ -34,7 +34,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _minute = 0;
   int _second = 0;
+  int _millisecond = 0;
   Timer? _timer;
   bool _isRunning = false;
 
@@ -51,9 +53,45 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$_second',
-              style: const TextStyle(fontSize: 100),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '$_minute',
+                      style: const TextStyle(fontSize: 80),
+                    ),
+                  ),
+                ),
+                const Text(
+                  ':',
+                  style: TextStyle(fontSize: 60),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${_second % 60}',
+                      style: const TextStyle(fontSize: 80),
+                    ),
+                  ),
+                ),
+                const Text(
+                  ':',
+                  style: TextStyle(fontSize: 60),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${_millisecond % 100}',
+                      style: const TextStyle(fontSize: 80),
+                    ),
+                  ),
+                ),
+              ],
             ),
             ElevatedButton(
               onPressed: () => toggleTimer(),
@@ -84,12 +122,14 @@ class _MyHomePageState extends State<MyHomePage> {
       _timer?.cancel();
     } else {
       _timer = Timer.periodic(
-        const Duration(seconds: 1),
+        const Duration(milliseconds: 10),
         (timer) {
           setState(() {
-            _second++;
+            _millisecond++;
+            _second = (_millisecond / 100).floor();
+            _minute = (_second / 60).floor();
 
-            if (_second == 10) {
+            if (_minute == 3) {
               resetTimer();
 
               Navigator.of(context).push(
@@ -112,7 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void resetTimer() {
     _timer?.cancel();
     setState(() {
+      _minute = 0;
       _second = 0;
+      _millisecond = 0;
       _isRunning = false;
     });
   }
