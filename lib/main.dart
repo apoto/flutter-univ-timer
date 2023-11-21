@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Timer App'),
     );
   }
 }
@@ -64,7 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            )
+            ),
+            ElevatedButton(
+                onPressed: () => resetTimer(),
+                child: const Text(
+                  'リセット',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ))
           ],
         ),
       ),
@@ -82,8 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _second++;
 
             if (_second == 10) {
-              _timer?.cancel();
-              _isRunning = false;
+              resetTimer();
 
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -99,6 +106,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     setState(() {
       _isRunning = !_isRunning;
+    });
+  }
+
+  void resetTimer() {
+    _timer?.cancel();
+    setState(() {
+      _second = 0;
+      _isRunning = false;
     });
   }
 }
