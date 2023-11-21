@@ -34,15 +34,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _minute = 0;
-  int _second = 0;
   int _millisecond = 0;
-  String _strMinute = '00';
-  String _strSecond = '00';
-  String _strMillisecond = '00';
 
   Timer? _timer;
   bool _isRunning = false;
+
+  String getStrMillisecond() {
+    final String strMillisecond =
+        (_millisecond % 100).toString().padLeft(2, '0');
+    return strMillisecond;
+  }
+
+  String getStrSecond() {
+    final int second = (_millisecond / 100).floor();
+    final String strSecond = (second % 60).toString().padLeft(2, '0');
+    return strSecond;
+  }
+
+  String getStrMinute() {
+    final int minute = (_millisecond / (100 * 60)).floor();
+    final String strMinutes = minute.toString().padLeft(2, '0');
+    return strMinutes;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //Text(timerString),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -64,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      _strMinute,
+                      getStrMinute(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -77,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      _strSecond,
+                      getStrSecond(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -90,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      _strMillisecond,
+                      getStrMillisecond(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -130,14 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
         (timer) {
           setState(() {
             _millisecond++;
-            _second = (_millisecond / 100).floor();
-            _minute = (_second / 60).floor();
 
-            _strMillisecond = (_millisecond % 100).toString().padLeft(2, '0');
-            _strSecond = (_second % 60).toString().padLeft(2, '0');
-            _strMinute = _minute.toString().padLeft(2, '0');
-
-            if (_minute == 3) {
+            if (_millisecond == 18000) {
               resetTimer();
 
               Navigator.of(context).push(
@@ -160,12 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void resetTimer() {
     _timer?.cancel();
     setState(() {
-      _minute = 0;
-      _second = 0;
       _millisecond = 0;
-      _strMinute = '00';
-      _strSecond = '00';
-      _strMillisecond = '00';
       _isRunning = false;
     });
   }
