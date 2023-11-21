@@ -37,6 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _minute = 0;
   int _second = 0;
   int _millisecond = 0;
+  String _strMinute = '00';
+  String _strSecond = '00';
+  String _strMillisecond = '00';
+
   Timer? _timer;
   bool _isRunning = false;
 
@@ -60,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '$_minute',
+                      _strMinute,
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -73,20 +77,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '${_second % 60}',
+                      _strSecond,
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
                 ),
                 const Text(
-                  ':',
+                  '.',
                   style: TextStyle(fontSize: 60),
                 ),
                 Expanded(
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '${_millisecond % 100}',
+                      _strMillisecond,
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -129,6 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
             _second = (_millisecond / 100).floor();
             _minute = (_second / 60).floor();
 
+            _strMillisecond = (_millisecond % 100).toString().padLeft(2, '0');
+            _strSecond = (_second % 60).toString().padLeft(2, '0');
+            _strMinute = _minute.toString().padLeft(2, '0');
+
             if (_minute == 3) {
               resetTimer();
 
@@ -155,6 +163,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _minute = 0;
       _second = 0;
       _millisecond = 0;
+      _strMinute = '00';
+      _strSecond = '00';
+      _strMillisecond = '00';
       _isRunning = false;
     });
   }
