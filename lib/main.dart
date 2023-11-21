@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_univ_timer/next_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,6 +80,19 @@ class _MyHomePageState extends State<MyHomePage> {
         (timer) {
           setState(() {
             _second++;
+
+            if (_second == 10) {
+              _timer?.cancel();
+              _isRunning = false;
+
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const NextPage(); // 遷移先の画面widgetを指定
+                  },
+                ),
+              );
+            }
           });
         },
       );
