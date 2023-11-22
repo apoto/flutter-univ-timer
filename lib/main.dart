@@ -39,22 +39,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer? _timer;
   bool _isRunning = false;
 
-  String getStrMillisecond() {
-    final String strMillisecond =
-        (_millisecond % 100).toString().padLeft(2, '0');
-    return strMillisecond;
+  String _getStrMinute() {
+    final int minute = (_millisecond / (100 * 60)).floor();
+    final String strMinutes = minute.toString().padLeft(2, '0');
+    return strMinutes;
   }
 
-  String getStrSecond() {
+  String _getStrSecond() {
     final int second = (_millisecond / 100).floor();
     final String strSecond = (second % 60).toString().padLeft(2, '0');
     return strSecond;
   }
 
-  String getStrMinute() {
-    final int minute = (_millisecond / (100 * 60)).floor();
-    final String strMinutes = minute.toString().padLeft(2, '0');
-    return strMinutes;
+  String _getStrMillisecond() {
+    final String strMillisecond =
+        (_millisecond % 100).toString().padLeft(2, '0');
+    return strMillisecond;
   }
 
   @override
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      getStrMinute(),
+                      _getStrMinute(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      getStrSecond(),
+                      _getStrSecond(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      getStrMillisecond(),
+                      _getStrMillisecond(),
                       style: const TextStyle(fontSize: 80),
                     ),
                   ),
